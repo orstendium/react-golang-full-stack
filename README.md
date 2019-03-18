@@ -187,7 +187,7 @@ devServer: {
 
 ### CompileDaemon
 
-CompileDaemon is a utility that will monitor for any changes in the server source code and it automatically restart the server. This is used in development only.
+CompileDaemon is a utility that will monitor for any changes in the server source code and it will automatically restart the server. This is used in development only.
 
 Below is the config which I am using in the package.json.
 
