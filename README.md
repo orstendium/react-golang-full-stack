@@ -1,6 +1,6 @@
 # simple-react-full-stack
 
-This is a custom boilerplate of mine to build a full stack web application using React, Golang and Webpack. It is also configured with webpack-dev-server, eslint, prettier and babel. It is based upon [Simple-React-Full-Stack](https://github.com/crsandeep/simple-react-full-stack)
+This is a custom boilerplate of mine to build a full stack web application using React, Golang and Webpack. It is also configured with webpack-dev-server, eslint, prettier and babel. It is based upon [simple-react-full-stack](https://github.com/crsandeep/simple-react-full-stack)
 
 - [simple-react-full-stack](#simple-react-full-stack)
   - [Introduction](#introduction)
