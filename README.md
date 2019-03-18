@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/crsandeep/simple-react-full-stack.svg?branch=master)](https://travis-ci.org/crsandeep/simple-react-full-stack)
 [![Greenkeeper badge](https://badges.greenkeeper.io/crsandeep/simple-react-full-stack.svg)](https://greenkeeper.io/)
 
-This is a boilerplate to build a full stack web application using React, Node.js, Express and Webpack. It is also configured with webpack-dev-server, eslint, prettier and babel.
+This is a boilerplate to build a full stack web application using React, Golang and Webpack. It is also configured with webpack-dev-server, eslint, prettier and babel.
 
 - [simple-react-full-stack](#simple-react-full-stack)
   - [Introduction](#introduction)
@@ -16,31 +16,33 @@ This is a boilerplate to build a full stack web application using React, Node.js
     - [ESLint](#eslint)
     - [Webpack](#webpack)
     - [Webpack dev server](#webpack-dev-server)
-    - [Nodemon](#nodemon)
-    - [Express](#express)
+    - [CompileDaemon](#compiledaemon)
     - [Concurrently](#concurrently)
     - [VSCode + ESLint + Prettier](#vscode--eslint--prettier)
       - [Installation guide](#installation-guide)
 
 ## Introduction
 
-[Create React App](https://github.com/facebook/create-react-app) is a quick way to get started with React development and it requires no build configuration. But it completely hides the build config which makes it difficult to extend. It also requires some additional work to integrate it with an existing Node.js/Express backend application.
+[Create React App](https://github.com/facebook/create-react-app) is a quick way to get started with React development and it requires no build configuration. But it completely hides the build config which makes it difficult to extend. It also requires some additional work to integrate it with an existing Golang backend application.
 
-This is a simple full stack [React](https://reactjs.org/) application with a [Node.js](https://nodejs.org/en/) and [Express](https://expressjs.com/) backend. Client side code is written in React and the backend API is written using Express. This application is configured with [Airbnb's ESLint rules](https://github.com/airbnb/javascript) and formatted through [prettier](https://prettier.io/).
+This is a simple full stack [React](https://reactjs.org/) application with a [Node.js](https://nodejs.org/en/) and [Golang](https://golang.org/) backend. Client side code is written in React and the backend API is written using Go. This application is configured with [Airbnb's ESLint rules](https://github.com/airbnb/javascript) and formatted through [prettier](https://prettier.io/).
 
 ### Development mode
 
-In the development mode, we will have 2 servers running. The front end code will be served by the [webpack dev server](https://webpack.js.org/configuration/dev-server/) which helps with hot and live reloading. The server side Express code will be served by a node server using [nodemon](https://nodemon.io/) which helps in automatically restarting the server whenever server side code changes.
+In the development mode, we will have 2 servers running. The front end code will be served by the [webpack dev server](https://webpack.js.org/configuration/dev-server/) which helps with hot and live reloading. The server side Golang code will be served by a server using [CompileDaemon](https://github.com/githubnemo/CompileDaemon) which helps in automatically restarting the server whenever server side code changes.
 
 ### Production mode
 
-In the production mode, we will have only 1 server running. All the client side code will be bundled into static files using webpack and it will be served by the Node.js/Express application.
+In the production mode, we will have only 1 server running. All the client side code will be bundled into static files using webpack and it will be served by the Golang application.
 
 ## Quick Start
 
 ```bash
 # Clone the repository
-git clone https://github.com/crsandeep/simple-react-full-stack
+git clone https://github.com/CDNHammer/simple-react-full-stack
+
+# Install CompileDaemon
+go get github.com/githubnemo/CompileDaemon
 
 # Go inside the directory
 cd simple-react-full-stack
@@ -62,7 +64,7 @@ yarn start (or npm start)
 
 ### Folder Structure
 
-All the source code will be inside **src** directory. Inside src, there is client and server directory. All the frontend code (react, css, js and any other assets) will be in client directory. Backend Node.js/Express code will be in the server directory.
+All the source code will be inside **src** directory. Inside src, there is client and backend directory. All the frontend code (react, css, js and any other assets) will be in client directory. Backend Golang code will be in the server directory.
 
 ### Babel
 
@@ -142,6 +144,7 @@ module.exports = {
   devServer: {
     port: 3000,
     open: true,
+    historyApiFallback: true,
     proxy: {
       "/api": "http://localhost:8080"
     }
@@ -173,56 +176,83 @@ The devServer section of webpack.config.js contains the configuration required t
 devServer: {
     port: 3000,
     open: true,
+    historyApiFallback: true,
     proxy: {
         "/api": "http://localhost:8080"
     }
 }
 ```
 
-[**Port**](https://webpack.js.org/configuration/dev-server/#devserver-port) specifies the Webpack dev server to listen on this particular port (3000 in this case). When [**open**](https://webpack.js.org/configuration/dev-server/#devserver-open) is set to true, it will automatically open the home page on startup. [Proxying](https://webpack.js.org/configuration/dev-server/#devserver-proxy) URLs can be useful when we have a separate API backend development server and we want to send API requests on the same domain. In our case, we have a Node.js/Express backend where we want to send the API requests to.
+[**Port**](https://webpack.js.org/configuration/dev-server/#devserver-port) specifies the Webpack dev server to listen on this particular port (3000 in this case). When [**open**](https://webpack.js.org/configuration/dev-server/#devserver-open) is set to true, it will automatically open the home page on startup. [historyApiFallback](https://webpack.js.org/configuration/dev-server/#devserverhistoryapifallback) is set to ensure all routes in React are served via the index page, rather than trying to get them from the server. [Proxying](https://webpack.js.org/configuration/dev-server/#devserver-proxy) URLs can be useful when we have a separate API backend development server and we want to send API requests on the same domain. In our case, we have a Golang backend where we want to send the API requests to.
 
-### Nodemon
+### CompileDaemon
 
-Nodemon is a utility that will monitor for any changes in the server source code and it automatically restart the server. This is used in development only.
+CompileDaemon is a utility that will monitor for any changes in the server source code and it automatically restart the server. This is used in development only.
 
-nodemon.json file is used to describe the configurations for Nodemon. Below is the nodemon.json file which I am using.
+Below is the config which I am using in the package.json.
 
 ```javascript
 {
-  "watch": ["src/server/"]
+  "scripts": {
+    "server": "CompileDaemon -build=\"go build ./src/backend/\" -directory=. -command=backend"
+  }
 }
 ```
 
-Here, we tell nodemon to watch the files in the directory src/server where out server side code resides. Nodemon will restart the node server whenever a file under src/server directory is modified.
+Here, we tell CompileDaemon to build the files in the directory src/server where our server side code resides, output the executable into the base directory, and then execute that executable. CompileDaemon will restart the go server whenever a file under src/server directory is modified.
 
-### Express
+### Golang
 
-Express is a web application framework for Node.js. It is used to build our backend API's.
+Golan is an open source compiled language. It is used to build our backend API's.
 
-src/server/index.js is the entry point to the server application. Below is the src/server/index.js file
+src/server/backend.go has the entry function, main, for the server application. Below is the src/server/backend.go file
 
-```javascript
-const express = require("express");
-const os = require("os");
+```golang
+package main
 
-const app = express();
+import (
+	"encoding/json"
+	"log"
+	"net/http"
+	"os"
 
-app.use(express.static("dist"));
-app.get("/api/getUsername", (req, res) =>
-  res.send({ username: os.userInfo().username })
-);
-app.listen(8080, () => console.log("Listening on port 8080!"));
+	"github.com/gorilla/mux"
+)
+
+const port = ":8080"
+
+func usernameHandler(w http.ResponseWriter, r *http.Request) {
+	type User struct{ Username string }
+	user := User{os.Getenv("USERNAME")}
+	p, _ := json.Marshal(user)
+	w.Write(p)
+}
+
+func main() {
+	log.Println("Starting Backend")
+
+	r := mux.NewRouter()
+	// Define API routes
+	r.HandleFunc("/api/username", usernameHandler).Methods("GET")
+
+	// Serve webapp static files
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("dist")))
+
+	log.Println("Http Listening")
+	http.ListenAndServe(
+		port, r)
+}
 ```
 
-This starts a server and listens on port 8080 for connections. The app responds with `{username: <username>}` for requests to the URL (/api/getUsername). It is also configured to serve the static files from **dist** directory.
+This starts a server and listens on port 8080 for connections. The app responds with `{Username: <username>}` for requests to the URL (/api/getUsername). It is also configured to serve the static files from **dist** directory.
 
 ### Concurrently
 
-[Concurrently](https://github.com/kimmobrunfeldt/concurrently) is used to run multiple commands concurrently. I am using it to run the webpack dev server and the backend node server concurrently in the development environment. Below are the npm/yarn script commands used.
+[Concurrently](https://github.com/kimmobrunfeldt/concurrently) is used to run multiple commands concurrently. I am using it to run the webpack dev server and the backend go server concurrently in the development environment. Below are the npm/yarn script commands used.
 
 ```javascript
 "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-"server": "nodemon src/server/index.js",
+"server": "CompileDaemon -build=\"go build ./src/backend/\" -directory=. -command=backend",
 "dev": "concurrently \"npm run server\" \"npm run client\""
 ```
 
