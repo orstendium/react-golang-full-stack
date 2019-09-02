@@ -13,7 +13,7 @@
   "author": "Neal Andrews",
   "license": "ISC",
   "dependencies": {
-    "babel-polyfill": "^6.26.0"
+    "babel-polyfill": "^6.26.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2"
   },
