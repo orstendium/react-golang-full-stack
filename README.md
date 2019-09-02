@@ -1,9 +1,6 @@
 # simple-react-full-stack
 
-[![Build Status](https://travis-ci.org/crsandeep/simple-react-full-stack.svg?branch=master)](https://travis-ci.org/crsandeep/simple-react-full-stack)
-[![Greenkeeper badge](https://badges.greenkeeper.io/crsandeep/simple-react-full-stack.svg)](https://greenkeeper.io/)
-
-This is a boilerplate to build a full stack web application using React, Golang and Webpack. It is also configured with webpack-dev-server, eslint, prettier and babel.
+This is a custom boilerplate of mine to build a full stack web application using React, Golang and Webpack. It is also configured with webpack-dev-server, eslint, prettier and babel. It is based upon [simple-react-full-stack](https://github.com/crsandeep/simple-react-full-stack)
 
 - [simple-react-full-stack](#simple-react-full-stack)
   - [Introduction](#introduction)
@@ -187,7 +184,7 @@ devServer: {
 
 ### CompileDaemon
 
-CompileDaemon is a utility that will monitor for any changes in the server source code and it automatically restart the server. This is used in development only.
+CompileDaemon is a utility that will monitor for any changes in the server source code and it will automatically restart the server. This is used in development only.
 
 Below is the config which I am using in the package.json.
 
