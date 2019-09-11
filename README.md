@@ -1,8 +1,8 @@
-# simple-react-full-stack
+# react-golang-full-stack
 
 This is a custom boilerplate of mine to build a full stack web application using React, Golang and Webpack. It is also configured with webpack-dev-server, eslint, prettier and babel. It is based upon [simple-react-full-stack](https://github.com/crsandeep/simple-react-full-stack)
 
-- [simple-react-full-stack](#simple-react-full-stack)
+- [react-golang-full-stack](#react-golang-full-stack)
   - [Introduction](#introduction)
     - [Development mode](#development-mode)
     - [Production mode](#production-mode)
@@ -22,11 +22,11 @@ This is a custom boilerplate of mine to build a full stack web application using
 
 [Create React App](https://github.com/facebook/create-react-app) is a quick way to get started with React development and it requires no build configuration. But it completely hides the build config which makes it difficult to extend. It also requires some additional work to integrate it with an existing Golang backend application.
 
-This is a simple full stack [React](https://reactjs.org/) application with a [Node.js](https://nodejs.org/en/) and [Golang](https://golang.org/) backend. Client side code is written in React and the backend API is written using Go. This application is configured with [Airbnb's ESLint rules](https://github.com/airbnb/javascript) and formatted through [prettier](https://prettier.io/).
+This is a simple full stack [React](https://reactjs.org/) application with a [Golang](https://golang.org/) backend. Client side code is written in React and the backend API is written using Go. This application is configured with [Airbnb's ESLint rules](https://github.com/airbnb/javascript) and formatted through [prettier](https://prettier.io/).
 
 ### Development mode
 
-In the development mode, we will have 2 servers running. The front end code will be served by the [webpack dev server](https://webpack.js.org/configuration/dev-server/) which helps with hot and live reloading. The server side Golang code will be served by a server using [CompileDaemon](https://github.com/githubnemo/CompileDaemon) which helps in automatically restarting the server whenever server side code changes.
+In the development mode, we will have 2 servers running. The front end code will be served by the [webpack dev server](https://webpack.js.org/configuration/dev-server/) which helps with hot and live reloading. The server side Golang code will be served by a server using [CompileDaemon](https://github.com/githubnemo/CompileDaemon) which helps in automatically restarting the server whenever the backend code changes.
 
 ### Production mode
 
