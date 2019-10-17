@@ -33,8 +33,6 @@ func main() {
 
 	currentDir, _ := filepath.Abs(filepath.Dir(os.Args[0]))
 	distDir := filepath.Join(currentDir, "dist")
-
-	log.Println(distDir)
 	spa := spaHandler{staticPath: distDir, indexPath: "index.html"}
 	r.PathPrefix("/").Handler(spa)
 
