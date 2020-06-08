@@ -26,7 +26,7 @@ This is a simple full stack [React](https://reactjs.org/) application with a [Go
 
 ### Development mode
 
-In the development mode, we will have 2 servers running. The front end code will be served by the [webpack dev server](https://webpack.js.org/configuration/dev-server/) which helps with hot and live reloading. The server side Golang code will be served by a server using [CompileDaemon](https://github.com/githubnemo/CompileDaemon) which helps in automatically restarting the server whenever the backend code changes.
+In the development mode, we will have 2 servers running. The front end code will be served by the [webpack dev server](https://webpack.js.org/configuration/dev-server/) which helps with hot and live reloading. The server side Golang code will be compiled using [NoDemon](https://nodemon.io/) which helps in automatically restarting the server whenever the backend code changes.
 
 ### Production mode
 
@@ -36,25 +36,22 @@ In the production mode, we will have only 1 server running. All the client side 
 
 ```bash
 # Clone the repository
-git clone https://github.com/CDNHammer/simple-react-full-stack
-
-# Install CompileDaemon
-go get github.com/githubnemo/CompileDaemon
+git clone https://github.com/CDNHammer/react-golang-full-stack
 
 # Go inside the directory
-cd simple-react-full-stack
+cd react-golang-full-stack
 
 # Install dependencies
-yarn (or npm install)
+npm install
 
 # Start development server
-yarn dev (or npm run dev)
+npm run dev
 
 # Build for production
-yarn build (or npm run build)
+npm run build
 
 # Start production server
-yarn start (or npm start)
+npm start
 ```
 
 ## Documentation
@@ -182,27 +179,27 @@ devServer: {
 
 [**Port**](https://webpack.js.org/configuration/dev-server/#devserver-port) specifies the Webpack dev server to listen on this particular port (3000 in this case). When [**open**](https://webpack.js.org/configuration/dev-server/#devserver-open) is set to true, it will automatically open the home page on startup. [historyApiFallback](https://webpack.js.org/configuration/dev-server/#devserverhistoryapifallback) is set to ensure all routes in React are served via the index page, rather than trying to get them from the server. [Proxying](https://webpack.js.org/configuration/dev-server/#devserver-proxy) URLs can be useful when we have a separate API backend development server and we want to send API requests on the same domain. In our case, we have a Golang backend where we want to send the API requests to.
 
-### CompileDaemon
+### NoDemon
 
-CompileDaemon is a utility that will monitor for any changes in the server source code and it will automatically restart the server. This is used in development only.
+NoDemon is a utility that will monitor for any changes in the server source code and it will automatically restart the server. This is used in development only.
 
 Below is the config which I am using in the package.json.
 
 ```javascript
 {
   "scripts": {
-    "server": "CompileDaemon -build=\"go build ./src/backend/\" -directory=. -command=backend"
+    "backend": "nodemon --ext go --exec \"cd ./src/backend && go build && backend || exit 1\"",
   }
 }
 ```
 
-Here, we tell CompileDaemon to build the files in the directory src/server where our server side code resides, output the executable into the base directory, and then execute that executable. CompileDaemon will restart the go server whenever a file under src/server directory is modified.
+Here, we tell NoDemon to execute go build in order to build the files in the directory src/backend where our server side code resides, output the executable into the same directory, and then execute that executable. CompileDaemon will restart the go server whenever a file under src/backend directory is modified.
 
 ### Golang
 
-Golan is an open source compiled language. It is used to build our backend API's.
+Golang is an open source compiled language. It is used to build our backend API's.
 
-src/server/backend.go has the entry function, main, for the server application. Below is the src/server/backend.go file
+src/backend/backend.go has the entry function, main, for the server application. Below is the src/backend/backend.go file
 
 ```golang
 package main
@@ -249,7 +246,7 @@ This starts a server and listens on port 8080 for connections. The app responds 
 
 ```javascript
 "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-"server": "CompileDaemon -build=\"go build ./src/backend/\" -directory=. -command=backend",
+"backend": "nodemon --ext go --exec \"cd ./src/backend && go build && backend || exit 1\"",
 "dev": "concurrently \"npm run server\" \"npm run client\""
 ```
 
