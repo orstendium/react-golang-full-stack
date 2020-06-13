@@ -13,7 +13,7 @@ This is a custom boilerplate of mine to build a full stack web application using
     - [ESLint](#eslint)
     - [Webpack](#webpack)
     - [Webpack dev server](#webpack-dev-server)
-    - [CompileDaemon](#compiledaemon)
+    - [NoDemon](#nodemon)
     - [Concurrently](#concurrently)
     - [VSCode + ESLint + Prettier](#vscode--eslint--prettier)
       - [Installation guide](#installation-guide)
