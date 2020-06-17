@@ -1,6 +1,6 @@
 # react-golang-full-stack
 
-This is a custom boilerplate of mine to build a full stack web application using React, Golang and Webpack. It is also configured with webpack-dev-server, eslint, prettier and babel. It is based upon [simple-react-full-stack](https://github.com/crsandeep/simple-react-full-stack)
+This is a custom boilerplate of mine to build a full stack web application using React, Golang and Webpack. It is also configured with webpack-dev-server, eslint, prettier and babel. It is heavily based upon [simple-react-full-stack](https://github.com/crsandeep/simple-react-full-stack) so check it out. I just converted it from a npmjs/express backend to Golang.
 
 - [react-golang-full-stack](#react-golang-full-stack)
   - [Introduction](#introduction)
@@ -20,13 +20,13 @@ This is a custom boilerplate of mine to build a full stack web application using
 
 ## Introduction
 
-[Create React App](https://github.com/facebook/create-react-app) is a quick way to get started with React development and it requires no build configuration. But it completely hides the build config which makes it difficult to extend. It also requires some additional work to integrate it with an existing Golang backend application.
+[Create React App](https://github.com/facebook/create-react-app) is the quickest way to get started with React development and it requires no build configuration. But it overly simplifes and hides the build config making it difficult to extend once you've developed your skills. It also requires some additional work to integrate it with a Golang backend application.
 
-This is a simple full stack [React](https://reactjs.org/) application with a [Golang](https://golang.org/) backend. Client side code is written in React and the backend API is written using Go. This application is configured with [Airbnb's ESLint rules](https://github.com/airbnb/javascript) and formatted through [prettier](https://prettier.io/).
+This is a 'simple' full stack [React](https://reactjs.org/) application with a [Golang](https://golang.org/) backend. This application is configured with [Airbnb's ESLint rules](https://github.com/airbnb/javascript) and formatted through [prettier](https://prettier.io/).
 
 ### Development mode
 
-In the development mode, we will have 2 servers running. The front end code will be served by the [webpack dev server](https://webpack.js.org/configuration/dev-server/) which helps with hot and live reloading. The server side Golang code will be compiled using [NoDemon](https://nodemon.io/) which helps in automatically restarting the server whenever the backend code changes.
+In the development mode, we will have 2 servers running. The front end code will be served by the [webpack dev server](https://webpack.js.org/configuration/dev-server/) which helps with hot and live reloading. The server side Golang code will be compiled using [NoDemon](https://nodemon.io/) which helps by automatically rebuilding and restarting the server whenever you save changes to the backend code.
 
 ### Production mode
 
@@ -58,11 +58,11 @@ npm start
 
 ### Folder Structure
 
-All the source code will be inside **src** directory. Inside src, there is client and backend directory. All the frontend code (react, css, js and any other assets) will be in client directory. Backend Golang code will be in the server directory.
+All the source code will be inside **src** directory. Inside src, there are the webapp and backend directories. All the frontend code (react, css, js and any other assets) will be in webapp directory. Backend Golang code will be in the backend directory.
 
 ### Babel
 
-[Babel](https://babeljs.io/) helps us to write code in the latest version of JavaScript. If an environment does not support certain features natively, Babel will help us to compile those features down to a supported version. It also helps us to convert JSX to Javascript.
+[Babel](https://babeljs.io/) helps us to write code in the latest version of JavaScript. If an environment does not support certain features natively, Babel will help compile those features down to a supported version. It also helps us to convert JSX to Javascript.
 
 [.babelrc file](https://babeljs.io/docs/usage/babelrc/) is used describe the configurations required for Babel. Below is the .babelrc file which I am using.
 
@@ -84,8 +84,7 @@ Babel requires plugins to do the transformation. Presets are the set of plugins 
 {
   "extends": ["airbnb"],
   "env": {
-    "browser": true,
-    "node": true
+    "browser": true
   },
   "rules": {
     "no-console": "off",
@@ -95,7 +94,7 @@ Babel requires plugins to do the transformation. Presets are the set of plugins 
 }
 ```
 
-[I am using Airbnb's Javascript Style Guide](https://github.com/airbnb/javascript) which is used by many JavaScript developers worldwide. Since we are going to write both client (browser) and server side (Node.js) code, I am setting the **env** to browser and node. Optionally, we can override the Airbnb's configurations to suit our needs. I have turned off [**no-console**](https://eslint.org/docs/rules/no-console), [**comma-dangle**](https://eslint.org/docs/rules/comma-dangle) and [**react/jsx-filename-extension**](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md) rules.
+[We'll be using Airbnb's Javascript Style Guide](https://github.com/airbnb/javascript), used by many JavaScript developers worldwide. Since we're writing client (browser) code, I am setting the **env** to browser. Optionally, we can override the Airbnb's configurations to suit our needs. I have turned off [**no-console**](https://eslint.org/docs/rules/no-console), [**comma-dangle**](https://eslint.org/docs/rules/comma-dangle) and [**react/jsx-filename-extension**](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md) rules.
 
 ### Webpack
 
@@ -111,7 +110,7 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const outputDirectory = "dist";
 
 module.exports = {
-  entry: ["babel-polyfill", "./src/client/index.js"],
+  entry: ["babel-polyfill", "./src/webapp/index.js"],
   output: {
     path: path.join(__dirname, outputDirectory),
     filename: "bundle.js"
@@ -153,7 +152,7 @@ module.exports = {
 };
 ```
 
-1.  **entry:** entry: ./src/client/index.js is where the application starts executing and webpack starts bundling.
+1.  **entry:** entry: ./src/webapp/index.js is where the application starts executing and webpack starts bundling.
     Note: babel-polyfill is added to support async/await. Read more [here](https://babeljs.io/docs/en/babel-polyfill#usage-in-node-browserify-webpack).
 2.  **output path and filename:** the target directory and the filename for the bundled output
 3.  **module loaders:** Module loaders are transformations that are applied on the source code of a module. We pass all the js file through [babel-loader](https://github.com/babel/babel-loader) to transform JSX to Javascript. CSS files are passed through [css-loaders](https://github.com/webpack-contrib/css-loader) and [style-loaders](https://github.com/webpack-contrib/style-loader) to load and bundle CSS files. Fonts and images are loaded through url-loader.
@@ -193,7 +192,7 @@ Below is the config which I am using in the package.json.
 }
 ```
 
-Here, we tell NoDemon to execute go build in order to build the files in the directory src/backend where our server side code resides, output the executable into the same directory, and then execute that executable. CompileDaemon will restart the go server whenever a file under src/backend directory is modified.
+Here, we tell NoDemon to execute go build in order to build the files in the directory src/backend where our server side code resides, output the executable into the same directory, and then execute that executable. CompileDaemon will restart the go server whenever a .go file under src/backend directory is modified.
 
 ### Golang
 
@@ -242,7 +241,7 @@ This starts a server and listens on port 8080 for connections. The app responds 
 
 ### Concurrently
 
-[Concurrently](https://github.com/kimmobrunfeldt/concurrently) is used to run multiple commands concurrently. I am using it to run the webpack dev server and the backend go server concurrently in the development environment. Below are the npm/yarn script commands used.
+[Concurrently](https://github.com/kimmobrunfeldt/concurrently) is used to run multiple npm commands concurrently. I am using it to run the webpack dev server and the backend go server concurrently in the development environment. Below are the npm script commands used.
 
 ```javascript
 "webapp": "webpack-dev-server --mode development --devtool inline-source-map --hot",
