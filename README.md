@@ -14,6 +14,7 @@ This is a custom boilerplate of mine to build a full stack web application using
     - [Webpack](#webpack)
     - [Webpack dev server](#webpack-dev-server)
     - [NoDemon](#nodemon)
+    - [Golang](#golang)
     - [Concurrently](#concurrently)
     - [VSCode + ESLint + Prettier](#vscode--eslint--prettier)
       - [Installation guide](#installation-guide)
