@@ -1,6 +1,6 @@
 # react-golang-full-stack
 
-This is a custom boilerplate of mine to build a full stack web application using React, Golang and Webpack. It is also configured with webpack-dev-server, eslint, prettier and babel. It is heavily based upon [simple-react-full-stack](https://github.com/crsandeep/simple-react-full-stack) so check it out. I just converted it from a npmjs/express backend to Golang.
+This is a custom boilerplate to build a full stack web application using React, Golang and Webpack. It is also configured with webpack-dev-server, eslint, prettier and babel. It is pretty much entirely based upon [simple-react-full-stack](https://github.com/crsandeep/simple-react-full-stack) so check it out. I've just converted it from a npmjs/express backend to Golang.
 
 - [react-golang-full-stack](#react-golang-full-stack)
   - [Introduction](#introduction)
@@ -269,3 +269,7 @@ This starts a server and listens on port 8080 for connections. The app responds 
     ```
 
 Above, we have modified editor configurations. Alternatively, this can be configured at the project level by following [this article](https://medium.com/@netczuk/your-last-eslint-config-9e35bace2f99).
+
+#### Note
+
+The npm scripts in package.json for running the backend aren't cross-platform. As it's currently set, the backend will start on Linux. If you wish to use on Windows, remove the './' from './backend' in the start and backend script commands. I haven't found a solution for a single cross-platform compatibile command yet.
