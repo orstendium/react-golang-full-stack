@@ -18,7 +18,9 @@ type spaHandler struct {
 }
 
 func usernameHandler(w http.ResponseWriter, r *http.Request) {
-	type User struct{ Username string }
+	type User struct {
+		Username string `json:"username"`
+	}
 	user := User{os.Getenv("USERNAME")}
 	p, _ := json.Marshal(user)
 	w.Write(p)
@@ -45,7 +47,6 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	path := filepath.Join(h.staticPath, r.URL.Path)
 	log.Println(path)
 	indexFile := filepath.Join(h.staticPath, h.indexPath)
-	log.Println(indexFile)
 	_, err := os.Stat(path)
 	if os.IsNotExist(err) {
 		http.ServeFile(w, r, indexFile)
