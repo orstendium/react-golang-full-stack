@@ -18,6 +18,7 @@ This is a custom boilerplate to build a full stack web application using React, 
     - [Concurrently](#concurrently)
     - [VSCode + ESLint + Prettier](#vscode--eslint--prettier)
       - [Installation guide](#installation-guide)
+    - [Note](#note)
 
 ## Introduction
 
@@ -270,6 +271,6 @@ This starts a server and listens on port 8080 for connections. The app responds 
 
 Above, we have modified editor configurations. Alternatively, this can be configured at the project level by following [this article](https://medium.com/@netczuk/your-last-eslint-config-9e35bace2f99).
 
-#### Note
+### Note
 
 The npm scripts in package.json for running the backend aren't cross-platform. As it's currently set, the backend will start on Linux. If you wish to use on Windows, remove the './' from './backend' in the start and backend script commands. I haven't found a solution for a single cross-platform compatibile command yet.
