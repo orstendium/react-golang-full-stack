@@ -6,8 +6,8 @@
   "main": "src/backend/backend.go",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "npm run build && go build ./src/backend/ && backend",
-    "webapp": "webpack-dev-server --mode development --devtool inline-source-map --hot",
+    "start": "npm run build && cd src/backend && go build && ./backend",
+    "webapp": "webpack serve --mode development --devtool inline-source-map --hot",
     "backend": "nodemon --ext go --exec \"cd src/backend && go build && ./backend || exit 1\"",
     "dev": "concurrently \"npm run backend\" \"npm run webapp\""
   },
