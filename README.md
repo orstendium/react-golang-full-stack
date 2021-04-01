@@ -18,7 +18,6 @@ This is a custom boilerplate to build a full stack web application using React, 
     - [Concurrently](#concurrently)
     - [VSCode + ESLint + Prettier](#vscode--eslint--prettier)
       - [Installation guide](#installation-guide)
-    - [Note](#note)
 
 ## Introduction
 
@@ -199,6 +198,10 @@ Below is the config which I am using in the package.json.
 
 Here, we tell NoDemon to execute go build in order to build the files in the directory src/backend where our server side code resides, output the executable into the same directory, and then execute that executable. CompileDaemon will restart the go server whenever a .go file under src/backend directory is modified.
 
+#### Note
+
+You might need to edit the backend script depending on your development OS. Bash needs the './backend' when calling the backend executable while the Windows console uses just 'backend.'
+
 ### Golang
 
 Golang is an open source compiled language. It is used to build our backend API's.
@@ -273,7 +276,3 @@ This starts a server and listens on port 8080 for connections. The app responds 
     ```
 
 Above, we have modified editor configurations. Alternatively, this can be configured at the project level by following [this article](https://medium.com/@netczuk/your-last-eslint-config-9e35bace2f99).
-
-### Note
-
-The npm scripts in package.json for running the backend aren't cross-platform. As it's currently set, the backend will start on Linux. If you wish to use on Windows, remove the './' from './backend' in the start and backend script commands. I haven't found a solution for a single cross-platform compatibile command yet.
