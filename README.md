@@ -264,7 +264,7 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-This starts a server and listens on port 8080 for connections. The app responds with `{Username: <username>}` for requests to the URL (/api/getUsername). It is also configured to serve the static files from **dist** directory.
+This starts a server and listens on port 8080 for connections. The app responds with the JSON object `{username: <username>}` for requests to the URL (/api/username). It is also configured to serve the static files from **dist** directory.
 
 ### Concurrently
 
