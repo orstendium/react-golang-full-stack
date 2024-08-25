@@ -2,7 +2,7 @@
   "name": "react-golang-full-stack",
   "version": "1.0.0",
   "description": "Boilerplate to build a full stack web application using React, Golang and Webpack.",
-  "repository": "github.com/CDNHammer/react-golang-full-stack",
+  "repository": "github.com/orstendium/react-golang-full-stack",
   "main": "src/backend/backend.go",
   "scripts": {
     "build": "webpack --mode production",
