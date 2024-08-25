@@ -1,4 +1,4 @@
-module github.com/CDNHammer/react-golang-full-stack
+module github.com/orstendium/react-golang-full-stack
 
 go 1.16
 
