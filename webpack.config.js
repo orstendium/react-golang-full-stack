@@ -37,11 +37,17 @@ module.exports = {
   },
   devServer: {
     port: 3000,
-    open: true,
+    open: false,
     historyApiFallback: true,
-    proxy: {
-      '/api': 'http://localhost:8080'
-    }
+    proxy: [
+      {
+        context: ['/api'],
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        secure: false,
+      },
+    ],
+    static: path.join(__dirname, outputDirectory), // Directory for static files
   },
   plugins: [
     new CleanWebpackPlugin(),

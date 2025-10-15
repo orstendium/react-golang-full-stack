@@ -1,23 +1,26 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import './app.css';
 import ReactImage from './react.png';
 
-export default class App extends Component {
-  state = { username: null };
+const App = () => {
 
-  componentDidMount() {
+  const [username, setUsername] = useState(null)
+
+  useEffect(() => {
     fetch('/api/username')
       .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
-  }
+      .then(user => setUsername(user.username))
+      .catch(err => console.log(err));
 
-  render() {
-    const { username } = this.state;
-    return (
-      <div>
-        {username ? <h1>{`Hello ${username}`}</h1> : <h1>Loading.. please wait!</h1>}
-        <img src={ReactImage} alt="react" />
-      </div>
-    );
-  }
+    return () => {}
+  }, [])
+  
+  return (
+    <div>
+      {username ? <h1>{`Hello ${username}`}</h1> : <h1>Loading.. please wait!</h1>}
+      <img src={ReactImage} alt="react" />
+    </div>
+  );
 }
+
+export default App
